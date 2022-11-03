@@ -1,0 +1,236 @@
+{
+	"info": {
+		"_postman_id": "646f0f31-6728-4283-a27c-9456b7acc66f",
+		"name": "Team2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24173934"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"subject\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Cookie JSESSIONID is present\", () => {\r",
+							"  pm.expect(pm.cookies.has('JSESSIONID')).to.be.true;\r",
+							"});\r",
+							"\r",
+							"const responseJson = pm.response.json();\r",
+							"pm.test(\"Testing type of appointment\", () => {\r",
+							"  pm.expect(responseJson.events[0].eventType).to.eql(\"REGULAR\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Testing note of appointment\", () => {\r",
+							"  pm.expect(responseJson.events[0].notes).to.eql(\"This is notes. \\nYou can write multiple lines. \");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Testing facility of appointment\", () => {\r",
+							"  pm.expect(responseJson.events[0].facilities[0].name).to.eql(\"Room 1\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Testing attendees of appointment\", () => {\r",
+							"  pm.expect(responseJson.events[0].attendees[0].id).to.eql(\"2\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Testing start time of appointment\", () => {\r",
+							"  pm.expect(responseJson.events[0].start.dateTime).to.eql(\"2022-11-04T19:00:00+07:00\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Testing end time of appointment\", () => {\r",
+							"  pm.expect(responseJson.events[0].end.dateTime).to.eql(\"2022-11-04T20:00:00+07:00\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Cybozu-Authorization",
+						"value": "Y3lib3p1OmN5Ym96dQ==",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Y3lib3p1OmN5Ym96dQ==",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://internship-qa-2.s.cybozu-dev.com/g/api/v1/schedule/events",
+					"protocol": "https",
+					"host": [
+						"internship-qa-2",
+						"s",
+						"cybozu-dev",
+						"com"
+					],
+					"path": [
+						"g",
+						"api",
+						"v1",
+						"schedule",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Cybozu-Authorization",
+						"value": "Y3lib3p1OmN5Ym96dQ==",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Y3lib3p1OmN5Ym96dQ==",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"eventType\": \"REGULAR\",\r\n  \"subject\": \"Team 2\",\r\n  \"notes\": \"This is notes. \\nYou can write multiple lines. \",\r\n  \"visibilityType\": \"PUBLIC\",\r\n  \"useAttendanceCheck\": true,\r\n  \"start\": {\r\n    \"dateTime\": \"2022-11-04T10:00:00+07:00\",\r\n    \"timeZone\": \"Asia/Bangkok\"\r\n  },\r\n  \"end\": {\r\n    \"dateTime\": \"2022-11-04T12:00:00+07:00\",\r\n    \"timeZone\": \"Asia/Bangkok\"\r\n  },\r\n  \"isAllDay\": \"false\",\r\n  \"isStartOnly\": \"false\",\r\n   \"attendees\": [\r\n    {\r\n      \"type\": \"USER\",\r\n      \"code\": \"cybozu\"\r\n    }\r\n  ],\r\n  \"watchers\": [\r\n    {\r\n      \"type\": \"USER\",\r\n      \"code\": \"cybozu\"\r\n    }\r\n  ],\r\n  \"facilities\": [\r\n    {\r\n      \"code\": \"1\"\r\n    }\r\n  ],\r\n  \"facilityUsingPurpose\": \"Because of the explanation of a new plan.\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://internship-qa-2.s.cybozu-dev.com/g/api/v1/schedule/events",
+					"protocol": "https",
+					"host": [
+						"internship-qa-2",
+						"s",
+						"cybozu-dev",
+						"com"
+					],
+					"path": [
+						"g",
+						"api",
+						"v1",
+						"schedule",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "X-Cybozu-Authorization",
+						"value": "Y3lib3p1OmN5Ym96dQ==",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Y3lib3p1OmN5Ym96dQ==",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"start\": {\r\n    \"dateTime\": \"2022-11-04T08:00:00+07:00\",\r\n    \"timeZone\": \"Asia/Bangkok\"\r\n  },\r\n  \"end\": {\r\n    \"dateTime\": \"2022-11-04T09:00:00+07:00\",\r\n    \"timeZone\": \"Asia/Bangkok\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://internship-qa-2.s.cybozu-dev.com/g/api/v1/schedule/events/545",
+					"protocol": "https",
+					"host": [
+						"internship-qa-2",
+						"s",
+						"cybozu-dev",
+						"com"
+					],
+					"path": [
+						"g",
+						"api",
+						"v1",
+						"schedule",
+						"events",
+						"545"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Cybozu-Authorization",
+						"value": "Y3lib3p1OmN5Ym96dQ==",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Y3lib3p1OmN5Ym96dQ==",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://internship-qa-2.s.cybozu-dev.com/g/api/v1/schedule/events/545",
+					"protocol": "https",
+					"host": [
+						"internship-qa-2",
+						"s",
+						"cybozu-dev",
+						"com"
+					],
+					"path": [
+						"g",
+						"api",
+						"v1",
+						"schedule",
+						"events",
+						"545"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
